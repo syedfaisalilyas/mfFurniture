@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
+import { LOCAL_PRODUCT_IMAGES } from '../data/imageMapping';
 
 const ProductContext = createContext(null);
 
@@ -37,7 +38,7 @@ export function ProductProvider({ children }) {
     discountedPrice: p.discounted_price ? parseFloat(p.discounted_price) : null,
     vendorPrice: p.vendor_price ? parseFloat(p.vendor_price) : null,
     categoryId: p.category_id,
-    images: p.images || [],
+    images: LOCAL_PRODUCT_IMAGES[p.id] || p.images || [],
     stock: p.stock,
     isFeatured: p.is_featured,
     rating: parseFloat(p.rating),

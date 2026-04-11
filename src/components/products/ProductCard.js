@@ -2,17 +2,21 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../../context/CartContext';
+import { resolveImageSource } from '../../data/imageMapping';
 import { colors } from '../../constants/colors';
 import { spacing } from '../../constants/spacing';
 import { typography } from '../../constants/typography';
 
 export default function ProductCard({ product, onPress }) {
   const { addToCart } = useCart();
+  const imgSrc = product.images?.[0]
+    ? resolveImageSource(product.images[0])
+    : { uri: 'https://via.placeholder.com/200' };
 
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.9}>
       <Image
-        source={{ uri: product.images[0] || 'https://via.placeholder.com/200' }}
+        source={imgSrc}
         style={styles.image}
       />
       {product.discountedPrice && (

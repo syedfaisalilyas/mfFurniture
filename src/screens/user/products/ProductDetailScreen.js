@@ -4,6 +4,7 @@ import {View, Text, ScrollView, Image, TouchableOpacity,
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useProducts } from '../../../context/ProductContext';
+import { resolveImageSource } from '../../../data/imageMapping';
 import { useCart } from '../../../context/CartContext';
 import { useWishlist } from '../../../context/WishlistContext';
 import { useReviews } from '../../../context/ReviewContext';
@@ -87,7 +88,7 @@ export default function ProductDetailScreen({ navigation, route }) {
           keyExtractor={(_, i) => String(i)}
           horizontal pagingEnabled showsHorizontalScrollIndicator={false}
           onMomentumScrollEnd={(e) => setActiveImage(Math.round(e.nativeEvent.contentOffset.x / width))}
-          renderItem={({ item }) => <Image source={{ uri: item }} style={styles.image} />}
+          renderItem={({ item }) => <Image source={resolveImageSource(item)} style={styles.image} />}
         />
         {product.images.length > 1 && (
           <View style={styles.dots}>

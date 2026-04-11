@@ -21,6 +21,7 @@ create table public.categories (
   id text primary key,
   name text not null,
   icon text default 'cube-outline',
+  section text default 'home',
   created_at timestamptz default now()
 );
 
@@ -38,6 +39,7 @@ create table public.products (
   description text,
   price numeric(10,2) not null,
   discounted_price numeric(10,2),
+  vendor_price numeric(10,2),
   category_id text references public.categories(id) on delete set null,
   images text[] default '{}',
   stock integer default 0,
