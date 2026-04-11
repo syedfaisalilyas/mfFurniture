@@ -681,7 +681,10 @@ export function getLocalImages(productId) {
  */
 export function resolveImageSource(imageRef) {
   if (typeof imageRef === 'number') {
-    return imageRef; // require() result
+    return imageRef; // require() result native
+  }
+  if (typeof imageRef === 'object' && imageRef !== null) {
+    return imageRef; // require() result web
   }
   if (typeof imageRef === 'string' && imageRef.length > 0) {
     return { uri: imageRef };
