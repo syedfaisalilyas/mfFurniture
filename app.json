@@ -37,7 +37,6 @@
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
-      "output": "static",
       "name": "mfFurniture",
       "shortName": "mfFurniture",
       "description": "Premium Home & Office Furniture"
