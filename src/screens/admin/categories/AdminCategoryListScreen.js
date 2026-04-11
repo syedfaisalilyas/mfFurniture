@@ -99,7 +99,11 @@ export default function AdminCategoryListScreen({ navigation }) {
           const count = products.filter((p) => p.categoryId === item.id).length;
           const sectionInfo = SECTIONS.find((s) => s.value === item.section) || SECTIONS[0];
           return (
-            <View style={styles.row}>
+            <TouchableOpacity 
+              style={styles.row}
+              activeOpacity={0.7}
+              onPress={() => navigation.navigate('AdminProductList', { categoryId: item.id })}
+            >
               <View style={styles.iconBox}>
                 <Ionicons name={item.icon || 'cube-outline'} size={24} color={colors.accent} />
               </View>
@@ -118,7 +122,7 @@ export default function AdminCategoryListScreen({ navigation }) {
               <TouchableOpacity onPress={() => handleDelete(item)} style={styles.actionBtn}>
                 <Ionicons name="trash-outline" size={20} color={colors.error} />
               </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           );
         }}
       />

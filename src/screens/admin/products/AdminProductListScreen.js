@@ -9,11 +9,18 @@ import { colors } from '../../../constants/colors';
 import { spacing } from '../../../constants/spacing';
 import { typography } from '../../../constants/typography';
 
-export default function AdminProductListScreen({ navigation }) {
+export default function AdminProductListScreen({ navigation, route }) {
   const { products, categories, deleteProduct } = useProducts();
   const [search, setSearch] = useState('');
+  const filterCategoryId = route.params?.categoryId;
 
-  const filtered = products.filter((p) =>
+  let filtered = products;
+  
+  if (filterCategoryId) {
+    filtered = filtered.filter((p) => p.categoryId === filterCategoryId);
+  }
+  
+  filtered = filtered.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
   );
 
