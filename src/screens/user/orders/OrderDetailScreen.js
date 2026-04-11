@@ -18,6 +18,8 @@ export default function OrderDetailScreen({ navigation, route }) {
   const { orders, updateOrderStatus } = useOrders();
   const order = orders.find((o) => o.id === orderId);
 
+  const [downloading, setDownloading] = useState(false);
+
   if (!order) {
     return (
       <SafeAreaView style={styles.safe}>
@@ -25,8 +27,6 @@ export default function OrderDetailScreen({ navigation, route }) {
       </SafeAreaView>
     );
   }
-
-  const [downloading, setDownloading] = useState(false);
   const currentStep = STATUS_STEPS.indexOf(order.status);
   const canCancel = CANCELLABLE.includes(order.status);
 

@@ -4,6 +4,7 @@ import {View, Text, FlatList, TouchableOpacity, Image, StyleSheet,
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useProducts } from '../../../context/ProductContext';
+import { resolveImageSource } from '../../../data/imageMapping';
 import { colors } from '../../../constants/colors';
 import { spacing } from '../../../constants/spacing';
 import { typography } from '../../../constants/typography';
@@ -62,7 +63,9 @@ export default function AdminProductListScreen({ navigation }) {
         renderItem={({ item }) => (
           <View style={styles.row}>
             <Image
-              source={{ uri: item.images[0] || 'https://via.placeholder.com/60' }}
+              source={item.images?.[0]
+                ? resolveImageSource(item.images[0])
+                : { uri: 'https://via.placeholder.com/60' }}
               style={styles.image}
             />
             <View style={styles.info}>

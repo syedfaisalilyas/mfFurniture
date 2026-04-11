@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useCart } from '../../context/CartContext';
+import { resolveImageSource } from '../../data/imageMapping';
 import { colors } from '../../constants/colors';
 import { spacing } from '../../constants/spacing';
 import { typography } from '../../constants/typography';
@@ -12,7 +13,9 @@ export default function CartItemRow({ item }) {
   return (
     <View style={styles.row}>
       <Image
-        source={{ uri: item.product.images[0] || 'https://via.placeholder.com/80' }}
+        source={item.product.images?.[0]
+          ? resolveImageSource(item.product.images[0])
+          : { uri: 'https://via.placeholder.com/80' }}
         style={styles.image}
       />
       <View style={styles.info}>

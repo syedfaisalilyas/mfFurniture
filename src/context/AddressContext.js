@@ -56,9 +56,10 @@ export function AddressProvider({ children }) {
     const { error } = await supabase.from('addresses').delete().eq('id', id);
     if (error) throw new Error(error.message);
     const remaining = addresses.filter((a) => a.id !== id);
-    // If deleted was default, make first remaining the default
+    // If deleted was the default and others remain, promote first remaining to default
     if (remaining.length > 0 && !remaining.find((a) => a.isDefault)) {
-      await setDefault(remaining[0].id);
+      await supabase.from('addresses').update({ is_default: true }).eq('id', remaining[0].id);
+      setAddresses(remaining.map((a, i) => ({ ...a, isDefault: i === 0 })));
     } else {
       setAddresses(remaining);
     }

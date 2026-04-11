@@ -81,7 +81,7 @@ export function OrderProvider({ children }) {
       order_id: orderId,
       product_id: i.product.id,
       product_name: i.product.name,
-      product_image: i.product.images?.[0] || '',
+      product_image: (typeof i.product.images?.[0] === 'string' ? i.product.images[0] : '') || '',
       quantity: i.quantity,
       unit_price: i.product.price,
     }));
