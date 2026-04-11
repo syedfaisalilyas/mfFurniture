@@ -535,7 +535,121 @@ const EXTRA_PRODUCT_IMAGES = {
 // COMBINED REGISTRY
 // ═══════════════════════════════════════════════════════════════
 
+
+// ═══════════════════════════════════════════════════════════════
+// ADDITIONAL PRODUCTS (from remaining disk files)
+// ═══════════════════════════════════════════════════════════════
+
+const REMAINING_IMAGES = {
+  p_rem_1: [
+    require('../../../assets/images/1d01add8-2d9c-4f37-9d00-d8306fa5bf8b.jpg'),
+    require('../../../assets/images/1d59eb98-e35e-4154-9adf-741021eeaa96.jpg'),
+    require('../../../assets/images/1ee087ba-d583-448f-8704-c464f3a69488.jpg'),
+    require('../../../assets/images/1f21c276-d571-446f-a8b4-25881bfd79b5.jpg'),
+  ],
+  p_rem_2: [
+    require('../../../assets/images/20396432-c8c8-4cdf-80d9-1e55b77fe170.jpg'),
+    require('../../../assets/images/20c93071-e310-4661-8038-a4ae76c44b25.jpg'),
+    require('../../../assets/images/20fa31bd-f9d3-48ec-a2d8-975073aebca6.jpg'),
+    require('../../../assets/images/2264baa7-caee-40fa-9ccb-62c35e535cfa.jpg'),
+  ],
+  p_rem_3: [
+    require('../../../assets/images/234c209d-b77b-4164-9ade-402ce79cfd86.jpg'),
+    require('../../../assets/images/23844ddf-5d00-4246-be08-938f91814c48.jpg'),
+    require('../../../assets/images/23b96b8f-8de1-4b1a-89d5-ee86fd515d69.jpg'),
+    require('../../../assets/images/25a9c574-5389-4b3e-abf2-a3778b6e5b5c.jpg'),
+  ],
+  p_rem_4: [
+    require('../../../assets/images/267d7439-9674-42ba-80ad-e04b8e2dc82f.jpg'),
+    require('../../../assets/images/276a456f-901c-449a-8789-346c62de3cea.jpg'),
+    require('../../../assets/images/2841738d-8c56-4544-a81b-d232b5cb24f4.jpg'),
+    require('../../../assets/images/289e5072-a910-4e90-b185-34f66c8e8f19.jpg'),
+  ],
+  p_rem_5: [
+    require('../../../assets/images/29244692-1203-4246-ab04-058541a6e461.jpg'),
+    require('../../../assets/images/29836064-0d36-4778-b668-28172e85e736.jpg'),
+    require('../../../assets/images/2b40e868-5d47-4240-a525-adf03ac74817.jpg'),
+    require('../../../assets/images/2cdbffeb-32e8-4dcb-bd6b-fc91890ce060.jpg'),
+  ],
+  p_rem_6: [
+    require('../../../assets/images/2d558bb3-1b93-49a7-8b08-375eda843b90.jpg'),
+    require('../../../assets/images/2d57559a-de17-459f-af63-996f6c062649.jpg'),
+    require('../../../assets/images/2d5b8766-280f-4797-a7dc-d80cad94f680.jpg'),
+    require('../../../assets/images/2e2e44e9-a797-4df4-babc-2d90c5372f8b.jpg'),
+  ],
+  p_rem_7: [
+    require('../../../assets/images/2e39506a-c0de-4547-8cfd-1f4e5ffe8915.jpg'),
+    require('../../../assets/images/2ee9504e-4880-4de0-82fc-a97882ead7ec.jpg'),
+    require('../../../assets/images/303d6da2-f20e-4c3a-819b-43be2448e616.jpg'),
+    require('../../../assets/images/31003165-d2e6-4b99-b026-2f1e0be2197c.jpg'),
+  ],
+  p_rem_8: [
+    require('../../../assets/images/310db786-0099-4b5f-8479-a64af23b161b.jpg'),
+    require('../../../assets/images/310ea885-72f6-494d-8164-fb47b1bca9f0.jpg'),
+    require('../../../assets/images/325429b7-2c84-48ca-b076-ef328b124dff.jpg'),
+    require('../../../assets/images/325fc1cf-a7d3-494c-943d-5f8881e3ed93.jpg'),
+  ],
+  p_rem_9: [
+    require('../../../assets/images/33353a68-aed0-4963-b60a-cb1273d7485b.jpg'),
+    require('../../../assets/images/33ee7c92-4124-406a-a3ab-633da4298863.jpg'),
+    require('../../../assets/images/3557581a-a3df-47bc-af08-cdee9e75e85c.jpg'),
+    require('../../../assets/images/35a27e68-28dc-48a2-acdc-d8f19f6f9aef.jpg'),
+  ],
+  p_rem_10: [
+    require('../../../assets/images/361df32b-b7e5-4d43-b83d-e1d68f492a8a.jpg'),
+    require('../../../assets/images/37d218b4-1e4e-4e4e-9ec0-5603e0ea0a32.jpg'),
+    require('../../../assets/images/387ad3bc-11ff-45ad-9fe7-5a0fca29db0c.jpg'),
+    require('../../../assets/images/38eff827-ec49-4b43-93be-99386a894ded.jpg'),
+  ],
+  p_rem_11: [
+    require('../../../assets/images/39579eb1-5f95-472f-a546-5fb145d464ea.jpg'),
+    require('../../../assets/images/395a99f6-5161-4d77-b120-8768ee76e66a.jpg'),
+    require('../../../assets/images/39a15b1f-d5e0-4e74-b0b0-f9c1e934673b.jpg'),
+    require('../../../assets/images/39c9533d-6b21-4cf9-946e-5b53fc6a4f2c.jpg'),
+  ],
+  p_rem_12: [
+    require('../../../assets/images/3a7374d2-1ee0-4ad4-87d0-d040cfbc02e8.jpg'),
+    require('../../../assets/images/3b195366-4dd7-4ec2-925d-eee12660629f.jpg'),
+    require('../../../assets/images/3b678cae-9be8-4ba3-90a3-97853f5caa3d.jpg'),
+    require('../../../assets/images/3b84c963-a98b-4762-806b-d59ec764e81f.jpg'),
+  ],
+  p_rem_13: [
+    require('../../../assets/images/3c7bd56d-a34c-4b1d-9917-c9884d8b4b92.jpg'),
+    require('../../../assets/images/3c8826e8-151a-4674-9ced-d990e01db725.jpg'),
+    require('../../../assets/images/3d70a02b-1d0e-4f09-818d-6f3783d26b4d.jpg'),
+    require('../../../assets/images/3d74b9e0-79a6-45a2-b7ac-9641dd13297d.jpg'),
+  ],
+  p_rem_14: [
+    require('../../../assets/images/569a5d91-fae2-43ee-a44b-844116fd9952.jpg'),
+    require('../../../assets/images/57d37671-3b3f-48ac-8769-9abe84235fe4.jpg'),
+    require('../../../assets/images/59512847-f45e-4015-ad0d-191f735e8a2b.jpg'),
+    require('../../../assets/images/596aa886-b2a1-427c-a9b7-01a99df4a38b.jpg'),
+  ],
+  p_rem_15: [
+    require('../../../assets/images/599af75b-cf94-4e61-97c7-01827f6cf1b6.jpg'),
+    require('../../../assets/images/5b9187be-bc40-43ce-8a97-7c31c0563525.jpg'),
+    require('../../../assets/images/5d2ddd36-9579-4981-9b25-c0cceaef4382.jpg'),
+    require('../../../assets/images/600af15e-5317-4307-bef6-ba0a4b35d06f.jpg'),
+  ],
+  p_rem_16: [
+    require('../../../assets/images/6076cfb7-319e-4553-8fa2-58e1feddf058.jpg'),
+    require('../../../assets/images/61c814ca-d808-4280-97a7-3b2f18d0f559.jpg'),
+    require('../../../assets/images/6243d5d8-b434-4198-a7d2-af2ba5ffcd13.jpg'),
+    require('../../../assets/images/634bba50-e546-42c8-ba82-4447c9fa439f.jpg'),
+  ],
+  p_rem_17: [
+    require('../../../assets/images/63ab87f0-7130-4b3f-b060-47fb4420e3c3.jpg'),
+    require('../../../assets/images/74456672-f806-46ee-8235-08b1d4239a4a.jpg'),
+    require('../../../assets/images/a357486b-18ca-41ee-b470-9513b390766d.jpg'),
+    require('../../../assets/images/b7de4bc9-1f00-4106-96a7-1c321f0efb49.jpg'),
+  ],
+  p_rem_18: [
+    require('../../../assets/images/e4bb6e2f-38c6-4b8d-a24d-c629202b71df.jpg'),
+  ],
+};
+
 export const LOCAL_PRODUCT_IMAGES = {
+  ...REMAINING_IMAGES,
   ...OFFICE_CHAIR_IMAGES,
   ...OFFICE_CHAIR_VARIANTS,
   ...OUTDOOR_IMAGES,
