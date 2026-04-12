@@ -1,30 +1,35 @@
 import React, { useState } from 'react';
 import {View, Text, FlatList, TouchableOpacity, Image, StyleSheet,
-  Alert, TextInput} from 'react-native';
+  Alert, TextInput, RefreshControl} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useProducts } from '../../../context/ProductContext';
 import { resolveImageSource } from '../../../data/imageMapping';
+import { formatCurrency } from '../../../lib/format';
 import { colors } from '../../../constants/colors';
 import { spacing } from '../../../constants/spacing';
 import { typography } from '../../../constants/typography';
 
 export default function AdminProductListScreen({ navigation, route }) {
-  const { products, categories, deleteProduct } = useProducts();
+  const { categoryId: routeCategoryId, categoryName, sectionLabel, sectionColor } = route?.params || {};
+  const { products, categories, deleteProduct, refresh } = useProducts();
   const [search, setSearch] = useState('');
-  const filterCategoryId = route.params?.categoryId;
+  const [refreshing, setRefreshing] = useState(false);
 
   let filtered = products;
-  
-  if (filterCategoryId) {
-    filtered = filtered.filter((p) => p.categoryId === filterCategoryId);
+  if (routeCategoryId) {
+    filtered = filtered.filter((p) => p.categoryId === routeCategoryId);
   }
-  
   filtered = filtered.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase())
   );
 
   const getCategoryName = (id) => categories.find((c) => c.id === id)?.name || id;
+
+  const headerColor = sectionColor || colors.primary;
+  const headerTitle = categoryName
+    ? `${categoryName} (${filtered.length})`
+    : `All Products (${products.length})`;
 
   const handleDelete = (product) => {
     Alert.alert(
@@ -37,16 +42,39 @@ export default function AdminProductListScreen({ navigation, route }) {
     );
   };
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refresh();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to refresh data');
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.header}>
+      <View style={[styles.header, { backgroundColor: headerColor }]}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Ionicons name="arrow-back" size={22} color={colors.white} />
         </TouchableOpacity>
-        <Text style={styles.title}>Products ({products.length})</Text>
+        <View style={styles.headerCenter}>
+          {sectionLabel ? (
+            <Text style={styles.headerSub}>{sectionLabel}</Text>
+          ) : null}
+          <Text style={styles.title} numberOfLines={1}>{headerTitle}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.headerBtn}
+          onPress={handleRefresh}
+          disabled={refreshing}
+        >
+          <Ionicons name="refresh" size={20} color={colors.white} />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.addBtn}
-          onPress={() => navigation.navigate('AdminProductForm', {})}
+          onPress={() => navigation.navigate('AdminProductForm', routeCategoryId ? { defaultCategoryId: routeCategoryId } : {})}
         >
           <Ionicons name="add" size={24} color={colors.white} />
         </TouchableOpacity>
@@ -67,6 +95,14 @@ export default function AdminProductListScreen({ navigation, route }) {
         data={filtered}
         keyExtractor={(p) => p.id}
         contentContainerStyle={styles.list}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            colors={[colors.primary]}
+            tintColor={colors.primary}
+          />
+        }
         renderItem={({ item }) => (
           <View style={styles.row}>
             <Image
@@ -79,7 +115,7 @@ export default function AdminProductListScreen({ navigation, route }) {
               <Text style={styles.name} numberOfLines={1}>{item.name}</Text>
               <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
               <View style={styles.meta}>
-                <Text style={styles.price}>${item.price}</Text>
+                <Text style={styles.price}>{formatCurrency(item.price)}</Text>
                 <Text style={[styles.stock, item.stock < 5 && styles.stockLow]}>
                   Stock: {item.stock}
                 </Text>
@@ -117,7 +153,18 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   backBtn: { padding: 6 },
-  title: { color: colors.white, fontSize: typography.sizes.base, fontWeight: typography.weights.bold },
+  headerCenter: { flex: 1, alignItems: 'center' },
+  headerSub: { color: 'rgba(255,255,255,0.7)', fontSize: typography.sizes.xs, marginBottom: 1 },
+  title: { color: colors.white, fontSize: typography.sizes.sm, fontWeight: typography.weights.bold },
+  headerBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.sm,
+  },
   addBtn: {
     width: 36,
     height: 36,

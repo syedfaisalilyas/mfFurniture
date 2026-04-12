@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet,
-  Alert, Modal, TextInput} from 'react-native';
+  Alert, Modal, TextInput, RefreshControl} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useProducts } from '../../../context/ProductContext';
@@ -17,7 +17,7 @@ const SECTIONS = [
 ];
 
 export default function AdminCategoryListScreen({ navigation }) {
-  const { categories, products, addCategory, updateCategory, deleteCategory } = useProducts();
+  const { categories, products, addCategory, updateCategory, deleteCategory, refresh } = useProducts();
   const [modal, setModal] = useState(false);
   const [editing, setEditing] = useState(null);
   const [name, setName] = useState('');
@@ -25,6 +25,7 @@ export default function AdminCategoryListScreen({ navigation }) {
   const [selectedSection, setSelectedSection] = useState('home');
   const [saving, setSaving] = useState(false);
   const [filterSection, setFilterSection] = useState('all');
+  const [refreshing, setRefreshing] = useState(false);
 
   const openAdd = () => { setEditing(null); setName(''); setSelectedIcon(ICONS[0]); setSelectedSection('home'); setModal(true); };
   const openEdit = (cat) => { setEditing(cat); setName(cat.name); setSelectedIcon(cat.icon || ICONS[0]); setSelectedSection(cat.section || 'home'); setModal(true); };
@@ -64,6 +65,17 @@ export default function AdminCategoryListScreen({ navigation }) {
     );
   };
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refresh();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to refresh data');
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
@@ -71,6 +83,13 @@ export default function AdminCategoryListScreen({ navigation }) {
           <Ionicons name="arrow-back" size={22} color={colors.white} />
         </TouchableOpacity>
         <Text style={styles.title}>Categories ({categories.length})</Text>
+        <TouchableOpacity
+          style={styles.headerBtn}
+          onPress={handleRefresh}
+          disabled={refreshing}
+        >
+          <Ionicons name="refresh" size={20} color={colors.white} />
+        </TouchableOpacity>
         <TouchableOpacity style={styles.addBtn} onPress={openAdd}>
           <Ionicons name="add" size={24} color={colors.white} />
         </TouchableOpacity>
@@ -95,6 +114,14 @@ export default function AdminCategoryListScreen({ navigation }) {
         data={filteredCategories}
         keyExtractor={(c) => c.id}
         contentContainerStyle={styles.list}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            colors={[colors.primary]}
+            tintColor={colors.primary}
+          />
+        }
         renderItem={({ item }) => {
           const count = products.filter((p) => p.categoryId === item.id).length;
           const sectionInfo = SECTIONS.find((s) => s.value === item.section) || SECTIONS[0];
@@ -179,6 +206,7 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: colors.primary, paddingHorizontal: spacing.md, paddingVertical: spacing.md },
   backBtn: { padding: 6 },
   title: { color: colors.white, fontSize: typography.sizes.base, fontWeight: typography.weights.bold },
+  headerBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center', marginRight: spacing.sm },
   addBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
   list: { padding: spacing.md },
   row: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.surface, borderRadius: 12, padding: spacing.md, marginBottom: spacing.sm, shadowColor: colors.cardShadow, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.8, shadowRadius: 4, elevation: 2 },
